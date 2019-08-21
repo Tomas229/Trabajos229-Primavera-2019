@@ -14,12 +14,12 @@ uint comprimir(uint *a, int nbits){
 	int lenUint=sizeof(uint)<<3;
 	
 	uint final=0;
-	
-	int mask = ~(-1<<nbits);
-	
-	for(int i = nbits; i<= lenUint; i+=nbits){
+	uint mask = ~(-1<<nbits);
+
+	for (int i = nbits; i <= lenUint; i += nbits) {
 		final = final << nbits;
-		final = final||(*a & mask);
+		uint m = *a & mask;
+		final = final|m;
 		a++;
 	}
 	return final;
@@ -47,14 +47,15 @@ void insertar(char *d, char *s) {
 	char * a = d;
 
 	a = a + len1 + len2;
-	d = d + len1;
+	d = d + len1 ;
 
-	for (int i = 0; i < len1 + 1; i++) {
+	for (int i = 0; i < len1+1; i++) {
 		*a = *d;
 		a = a - 1;
 		d = d - 1;
 	}
-
+	d++;
+	a++;
 	for (int i = 0; i < len2; i++) {
 		*d = *s;
 		d++;
