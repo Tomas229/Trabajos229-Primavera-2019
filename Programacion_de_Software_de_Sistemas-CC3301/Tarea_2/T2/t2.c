@@ -18,5 +18,5 @@ int calzar(Nodo *a, Nodo **ppat) {
 		return 0;
 	}
 
-	return calzar(a, &b->izq) & calzar(a, &b->der);
+	return calzar(a->izq, &b->izq) & calzar(a->der, &b->der);
 }
