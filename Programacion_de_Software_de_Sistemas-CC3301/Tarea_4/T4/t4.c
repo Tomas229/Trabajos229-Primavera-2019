@@ -24,11 +24,19 @@ double integral_par(Funcion f, void *ptr, double xi, double xf, int n, int p) {
 
     double dx = (xf-xi)/p;
 
-    double resultadoFinal;
+    int k = n%p;
+
+    double resultadoFinal = 0;
 
     for(int r=0; r<p; r++){
         Args *arg = & array[r];
-        arg->f = f; arg->ptr = ptr; arg->n =n/p;
+        arg->f = f; arg->ptr = ptr; 
+        
+        int i = n/p;
+        if(r<k){
+            i++;
+        }
+        arg->n = i;
 
         arg->xi = xi + r*dx;
     
