@@ -36,16 +36,14 @@ double integral_par(Funcion f, void *ptr, double xi, double xf, int n, int p) {
 
 
         if ((pids[r]= fork())==0) { 
-            close(fds[0]);
-            double *res; 
+            close(fds[0]); 
             double num = integral(f, ptr, xi + r*dx, xi + (r+1)*dx, i);
-            res = & num; 
-            write(fds[1], res , sizeof(double));        //arreglar
+            write(fds[1], &num , sizeof(num));     
             exit(0);   
         }
         else {
             close(fds[1]);
-            infds[k] = fds[0];
+            infds[r] = fds[0];
         }
     }
     double resultadoFinal = 0;
@@ -54,7 +52,6 @@ double integral_par(Funcion f, void *ptr, double xi, double xf, int n, int p) {
         leer(infds[k], buf, sizeof(double));
         waitpid(pids[k], NULL, 0);  
         close(infds[k]); 
-        printf("%lf\n", buf[0]);
         resultadoFinal += buf[0];
         }
 
