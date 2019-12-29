@@ -1,0 +1,173 @@
+CREATE TABLE lab8_p.SaleAlan_Estado (
+    nombre varchar (255),
+	voto_electoral smallint,
+	cierre time,
+	num_candidatos smallint,
+	CONSTRAINT Estado_llave PRIMARY KEY(nombre)
+);
+
+INSERT INTO lab8_p.SaleAlan_Estado SELECT * FROM lab8_b.Estado;
+
+CREATE TABLE lab8_p.SaleAlan_Condado (
+    nombre varchar (255),
+	estado varchar (255),
+	reportado float,
+	CONSTRAINT Condado_llave PRIMARY KEY (nombre, estado),
+	CONSTRAINT Condado_foraneo FOREIGN KEY (estado)
+		REFERENCES lab8_p.SaleAlan_Estado (nombre) MATCH SIMPLE
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
+	CONSTRAINT Condado_fraccion CHECK( 0<=reportado AND reportado<= 1)
+);
+
+INSERT INTO lab8_p.SaleAlan_Condado SELECT * FROM lab8_b.Condado;
+
+CREATE TABLE lab8_p.SaleAlan_Candidato (
+    nombre varchar (255),
+	partido varchar (255),
+	CONSTRAINT Candidado_llave PRIMARY KEY(nombre)
+);
+
+INSERT INTO lab8_p.SaleAlan_Candidato SELECT * FROM lab8_b.Candidato;
+
+CREATE TABLE lab8_p.SaleAlan_VotosPorCondado (
+    candidato varchar (255),
+	condado varchar (255),
+	estado varchar (255),
+    votos int,
+	CONSTRAINT VotosPorCondado_llave PRIMARY KEY(candidato,condado,estado),
+	CONSTRAINT VotosPorCondado_foraneo1 FOREIGN KEY (candidato)
+		REFERENCES lab8_p.SaleAlan_Candidato (nombre) MATCH SIMPLE
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
+	CONSTRAINT VotosPorCondado_foraneo2 FOREIGN KEY (condado,estado)
+		REFERENCES lab8_p.SaleAlan_Condado (nombre,estado) MATCH SIMPLE
+		ON UPDATE CASCADE
+		ON DELETE CASCADE
+);
+
+INSERT INTO lab8_p.SaleAlan_VotosPorCondado SELECT * FROM lab8_b.VotosPorCondado;
+
+UPDATE lab8_p.SaleAlan_VotosPorCondado V
+	SET votos = V1.votos
+	FROM lab8_b.Voto1 V1
+	WHERE V.candidato = V1.candidato AND V.condado = V1.condado AND V.estado = V1.estado
+;
+
+UPDATE lab8_p.SaleAlan_Condado C
+	SET reportado = C1.reportado
+	FROM lab8_b.Condado1 C1
+	WHERE C.nombre = C1.nombre AND C.estado = C1.estado
+;
+
+START TRANSACTION ;
+	UPDATE lab8_p.SaleAlan_VotosPorCondado V
+	SET votos = V1.votos
+	FROM lab8_b.Voto2 V1
+	WHERE V.candidato = V1.candidato AND V.condado = V1.condado AND V.estado = V1.estado;
+
+	UPDATE lab8_p.SaleAlan_Condado C
+	SET reportado = C1.reportado
+	FROM lab8_b.Condado2 C1
+	WHERE C.nombre = C1.nombre AND C.estado = C1.estado;
+COMMIT;
+
+START TRANSACTION ;
+	UPDATE lab8_p.SaleAlan_VotosPorCondado V
+	SET votos = V1.votos
+	FROM lab8_b.Voto3 V1
+	WHERE V.candidato = V1.candidato AND V.condado = V1.condado AND V.estado = V1.estado;
+
+	UPDATE lab8_p.SaleAlan_Condado C
+	SET reportado = C1.reportado
+	FROM lab8_b.Condado3 C1
+	WHERE C.nombre = C1.nombre AND C.estado = C1.estado;
+COMMIT;
+
+START TRANSACTION ;
+	UPDATE lab8_p.SaleAlan_VotosPorCondado V
+	SET votos = V1.votos
+	FROM lab8_b.Voto4 V1
+	WHERE V.candidato = V1.candidato AND V.condado = V1.condado AND V.estado = V1.estado;
+
+	UPDATE lab8_p.SaleAlan_Condado C
+	SET reportado = C1.reportado
+	FROM lab8_b.Condado4 C1
+	WHERE C.nombre = C1.nombre AND C.estado = C1.estado;
+COMMIT;
+
+START TRANSACTION ;
+	UPDATE lab8_p.SaleAlan_VotosPorCondado V
+	SET votos = V1.votos
+	FROM lab8_b.Voto5 V1
+	WHERE V.candidato = V1.candidato AND V.condado = V1.condado AND V.estado = V1.estado;
+
+	UPDATE lab8_p.SaleAlan_Condado C
+	SET reportado = C1.reportado
+	FROM lab8_b.Condado5 C1
+	WHERE C.nombre = C1.nombre AND C.estado = C1.estado;
+COMMIT;
+
+START TRANSACTION ;
+	UPDATE lab8_p.SaleAlan_VotosPorCondado V
+	SET votos = V1.votos
+	FROM lab8_b.Voto6 V1
+	WHERE V.candidato = V1.candidato AND V.condado = V1.condado AND V.estado = V1.estado;
+
+	UPDATE lab8_p.SaleAlan_Condado C
+	SET reportado = C1.reportado
+	FROM lab8_b.Condado6 C1
+	WHERE C.nombre = C1.nombre AND C.estado = C1.estado;
+COMMIT;
+
+START TRANSACTION ;
+	UPDATE lab8_p.SaleAlan_VotosPorCondado V
+	SET votos = V1.votos
+	FROM lab8_b.Voto7 V1
+	WHERE V.candidato = V1.candidato AND V.condado = V1.condado AND V.estado = V1.estado;
+
+	UPDATE lab8_p.SaleAlan_Condado C
+	SET reportado = C1.reportado
+	FROM lab8_b.Condado7 C1
+	WHERE C.nombre = C1.nombre AND C.estado = C1.estado;
+COMMIT;
+
+START TRANSACTION ;
+	UPDATE lab8_p.SaleAlan_VotosPorCondado V
+	SET votos = V1.votos
+	FROM lab8_b.Voto8 V1
+	WHERE V.candidato = V1.candidato AND V.condado = V1.condado AND V.estado = V1.estado;
+
+	UPDATE lab8_p.SaleAlan_Condado C
+	SET reportado = C1.reportado
+	FROM lab8_b.Condado8 C1
+	WHERE C.nombre = C1.nombre AND C.estado = C1.estado;
+COMMIT;
+
+START TRANSACTION ;
+	UPDATE lab8_p.SaleAlan_VotosPorCondado V
+	SET votos = V1.votos
+	FROM lab8_b.Voto9 V1
+	WHERE V.candidato = V1.candidato AND V.condado = V1.condado AND V.estado = V1.estado;
+
+	UPDATE lab8_p.SaleAlan_Condado C
+	SET reportado = C1.reportado
+	FROM lab8_b.Condado9 C1
+	WHERE C.nombre = C1.nombre AND C.estado = C1.estado;
+COMMIT;
+
+START TRANSACTION ;
+	UPDATE lab8_p.SaleAlan_VotosPorCondado V
+	SET votos = V1.votos
+	FROM lab8_b.VotoX V1
+	WHERE V.candidato = V1.candidato AND V.condado = V1.condado AND V.estado = V1.estado;
+
+	UPDATE lab8_p.SaleAlan_Condado C
+	SET reportado = C1.reportado
+	FROM lab8_b.CondadoX C1
+	WHERE C.nombre = C1.nombre AND C.estado = C1.estado;
+COMMIT;
+
+Putin no lo logró, sus juakers obtuvieron un ROLLBACK y no se subieron los cambios
+
+Integrantes: Nicolás Canales Verdugo, Tomás Cortez, Beatriz Graboloza.

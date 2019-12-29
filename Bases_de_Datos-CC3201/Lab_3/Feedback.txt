@@ -1,0 +1,5 @@
+Notas: 6.1
+
+P6: -0.3 No consideraron los jefes que trabajan en un país que no habla francés, pero en una empresa que tiene una sucursal en un país que si lo habla.
+P11: -0.5 Agrexgación arroja una relación con el valor mínimo, y no un país.
+P12: -0.1 debían especificar que atributo querian contar, o sino, cuenta todas las filas.

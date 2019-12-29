@@ -1,0 +1,67 @@
+Integrantes: Martín Araya, Tomás Cortez, Beatriz Graboloza 
+
+DISCLAIMER: Puede que las comillas no funcionen al hacer copy past por temas de formato.
+
+P1
+SELECT nombre FROM  aerolinea 
+WHERE pais = ‘Japan’;
+
+P2
+SELECT nombre FROM aeropuerto 
+WHERE nombre LIKE '%Prince%';
+
+P3
+SELECT ciudad FROM aeropuerto 
+WHERE pais = 'Canada' AND iata Like 'YY%';
+
+P4
+SELECT DISTINCT nombre 
+FROM aerolinea, ruta 
+WHERE ruta.aerolinea = aerolinea.iata AND ruta.origen = ‘SCL’;
+
+P5
+SELECT aerolinea, origen, destino 
+FROM aeropuerto A1, aeropuerto A2, ruta
+WHERE A1.pais = 'Chile' AND A2.pais = 'Chile' AND A1.iata = ruta.origen AND A2.iata = ruta.destino;
+
+P6
+SELECT COUNT(nombre) AS cuenta
+FROM aeropuerto, ruta
+WHERE aeropuerto.iata = ruta.destino
+GROUP BY nombre
+ORDER BY cuenta DESC
+LIMIT 30;
+
+P7
+SELECT ciudad, COUNT(nombre) AS cuenta
+FROM aeropuerto
+GROUP BY ciudad
+HAVING COUNT(*) >=2;
+
+P8
+SELECT DISTINCT iata
+FROM aeropuerto, ruta
+WHERE aeropuerto.iata = ruta.destino AND ruta.origen = 'SCL'
+EXCEPT
+SELECT DISTINCT iata
+FROM aeropuerto, ruta
+WHERE aeropuerto.iata = ruta.destino AND ruta.origen = 'UIO';
+
+P9
+SELECT nombre, ciudad
+FROM aeropuerto, ruta
+WHERE aeropuerto.iata = ruta.destino AND ruta.origen = 'SCL';
+
+P10
+(SELECT DISTINCT nombre, ciudad, pais, iata, icao
+FROM aeropuerto)
+EXCEPT
+(SELECT DISTINCT a2.nombre, a2.ciudad, a2.pais, a2.iata, a2.icao
+FROM ruta, aeropuerto a2
+WHERE  ruta.destino = a2.iata OR ruta.origen = a2.iata);
+
+P11
+SELECT DISTINCT aerolinea.nombre
+FROM aerolinea, ruta, aeropuerto a1, aeropuerto  a2
+WHERE aerolinea.iata = ruta.aerolinea AND a1.iata = ruta.origen AND a2.iata = ruta.destino 
+AND ((a1.pais = ‘Argentina’ AND a2.pais = ‘Chile’) OR (a1.pais = ‘Chile’ AND a2.pais = ‘Argentina’)) AND (NOT(aerolinea.pais = ‘Chile’) AND NOT(aerolinea.pais = ‘Argentina’));

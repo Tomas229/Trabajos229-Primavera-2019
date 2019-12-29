@@ -1,0 +1,11 @@
+Notas: 7.0
+P1: 65
+P2: 57
+
+P1
+-0.5 No especifica relación débil de la entidad débil.
+P2:
+-0.5 No especifica relaciones débiles de las entidades débiles.
+-0.4 Episodio, Actor y Personaje deben ser una relación ternaria.
+-0.2 Un episodio puede tener 0-n actores.
+-0.2 Un actor debe tener al menos un personaje. -0.0 El informe está muy lindo, pero para la próxima preocúpense de que las imágenes sean más grandes.

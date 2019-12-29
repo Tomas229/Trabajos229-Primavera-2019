@@ -1,0 +1,17 @@
+Notas: 6.8
+0.9
+puntos
+0.9
+puntos
+0.9
+puntos
+0.9
+puntos
+0.4
+puntos
+0.9
+puntos
+0.9
+puntos
+
+P5(ex P6): Se pedía el par ciudadOrigen, ciudadDestino
