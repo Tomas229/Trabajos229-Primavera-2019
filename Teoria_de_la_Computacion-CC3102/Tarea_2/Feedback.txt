@@ -1,0 +1,9 @@
+P1:4.0
+P2:6.0
+P3:7.0
+P4:7.0
+P5:7.0
+
+
+P1: La idea tiene algo de sentido, pero no genera el lenguaje pedido. No refleja por ejemplo la noción de que un 1 extra te da un 0 "gratis" más adelante. Tampoco genera, por ejemplo, el string 00100, que es válido.
+P2: Falta argumentar de alguna forma que poner y sacar varias cosas del stack es equivalente a poner y sacar solo un elemento. -1.0 pts.

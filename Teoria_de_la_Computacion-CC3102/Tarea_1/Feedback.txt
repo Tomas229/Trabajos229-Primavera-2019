@@ -1,0 +1,8 @@
+P1:6.8
+P2:7.0
+P3:4.5
+P4:7.0
+P5:6.0
+
+
+P1C: Omite string abc. -0.2 pts. Como nota general de P1: Cabe notar que se solicitaba construcción de AFND, no de AFD. P5:la escritura del segundo párrafo en adelante no se entiende, la idea es correcta
