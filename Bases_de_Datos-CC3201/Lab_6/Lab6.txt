@@ -1,0 +1,111 @@
+﻿Integrantes : Tomás Cortez y Beatriz Graboloza
+
+
+P1
+
+
+SELECT pais, COUNT(*)
+FROM aeropuerto
+GROUP BY pais
+HAVING COUNT(*) = (
+SELECT MAX(CountAero.Count)
+FROM (
+SELECT pais, COUNT(*) as Count
+FROM aeropuerto
+GROUP BY pais
+)CountAero
+);
+
+
+P2 c murició en el lab (dijeron que no iba uwu)
+
+
+P3
+
+
+SELECT Aero.pais, MAX(Aero.Cuenta)
+FROM 
+(SELECT aeropuerto.iata, aeropuerto.pais, COUNT(*) AS Cuenta
+FROM aeropuerto, ruta
+WHERE aeropuerto.iata = ruta.destino
+GROUP BY aeropuerto.iata
+) Aero
+
+
+GROUP BY Aero.pais;
+
+
+P4
+
+
+SELECT CHI.aerolinea AS CHI, ARG.aerolinea AS ARG
+FROM (
+SELECT DISTINCT Ruta.aerolinea
+FROM Ruta, Aeropuerto
+WHERE Ruta.origen = Aeropuerto.iata AND Aeropuerto.pais = ‘Chile’) CHI
+FULL OUTER JOIN
+(SELECT DISTINCT Ruta.aerolinea
+FROM Ruta, Aeropuerto
+WHERE Ruta.origen = Aeropuerto.iata AND Aeropuerto.pais = ‘Argentina’) ARG
+ON CHI.aerolinea = ARG.aerolinea;
+
+
+P5
+
+
+SELECT CHI.aerolinea AS CHI, ARG.aerolinea AS ARG
+FROM (
+SELECT DISTINCT Ruta.aerolinea
+FROM Ruta, Aeropuerto
+WHERE Ruta.origen = Aeropuerto.iata AND Aeropuerto.pais = 'Chile') CHI
+,
+(SELECT DISTINCT Ruta.aerolinea
+FROM Ruta, Aeropuerto
+WHERE Ruta.origen = Aeropuerto.iata AND Aeropuerto.pais = 'Argentina') ARG
+WHERE CHI.aerolinea = ARG.aerolinea;
+
+
+P6
+
+
+Pusimos las ciudades que son origen y las que son destino en la misma columna porque encontramos que eso es lo que estaba pidiendo:
+
+
+SELECT DISTINCT aeropuerto.ciudad
+FROM ruta, aeropuerto, (SELECT aerolinea, COUNT(*)
+FROM aeropuerto, ruta
+WHERE aeropuerto.iata = ruta.origen OR aeropuerto.iata = ruta.destino
+GROUP BY ruta.aerolinea
+ORDER BY COUNT(*) DESC LIMIT 10) BestAero
+WHERE ruta.aerolinea = BestAero.aerolinea AND (ruta.origen = aeropuerto.iata OR ruta.destino = aeropuerto.iata);
+
+
+P7
+
+
+SELECT T1.aerolinea, T1.Cuenta1::float/T2.Cuenta2 as Razon 
+FROM
+(SELECT aerolinea, COUNT(*) AS Cuenta1
+FROM aeropuerto, ruta, aerolinea
+WHERE aeropuerto.iata = ruta.origen AND aeropuerto.pais = aerolinea.pais AND aerolinea.iata = ruta.aerolinea
+GROUP BY ruta.aerolinea) T1
+,
+(SELECT aerolinea, COUNT(*) AS Cuenta2
+FROM ruta
+GROUP BY ruta.aerolinea) T2
+WHERE T1.aerolinea = T2.aerolinea
+ORDER BY T1.Cuenta1::float/T2.Cuenta2 DESC;
+ 
+P8
+
+
+SELECT paises.pais, COALESCE(vuelosaero.cuenta,0) AS cuenta
+FROM
+(SELECT aeropuerto.pais, COUNT(*) AS cuenta
+FROM ruta, aeropuerto
+WHERE ruta.aerolinea = ‘KE’ AND ruta.destino = aeropuerto.iata 
+GROUP BY aeropuerto.pais) vuelosaero
+RIGHT OUTER JOIN
+(SELECT DISTINCT pais
+FROM aeropuerto) paises
+ON  vuelosaero.pais = paises.pais;
